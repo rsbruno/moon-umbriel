@@ -4,7 +4,8 @@
     "paths": {
       "@routes/*": ["./src/routes/*"],
       "@screens/*": ["./src/screens/*"],
-      "@themes/*": ["src/fonts/*"],
+      "@themes/*": ["src/themes/*"],
+      "@components/*": ["src/components/*"],
     }
   },
   "extends": "expo/tsconfig.base"
