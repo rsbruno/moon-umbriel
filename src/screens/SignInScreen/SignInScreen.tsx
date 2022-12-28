@@ -6,6 +6,7 @@ import { Buttons } from "@components/Buttons";
 import { Inputs } from "@components/Inputs";
 import { themes } from "@themes/index";
 import { Container, Content, FooterContainer, ForgotPasswordButton, ForgotPasswordText, LogoContainer, SignInContainer } from "./SignInStyles";
+import { MotiView } from "moti";
 
 export function SignInScreen() {
     return <>
@@ -19,14 +20,30 @@ export function SignInScreen() {
                 <LogoContainer>
                     {/* COLOCAR LOGO AQUI */}
                 </LogoContainer>
-                <SignInContainer>
-                    <Inputs.TextInput placeholder="usuário ou email" />
-                    <Inputs.Password placeholder="senha" />
-                    <Buttons.SimpleButton label="ENTRAR" />
-                    <ForgotPasswordButton>
-                        <ForgotPasswordText>Esqueceu sua senha?</ForgotPasswordText>
-                    </ForgotPasswordButton>
-                </SignInContainer>
+                <MotiView
+                    from={{
+                        opacity: 0
+                    }}
+                    animate={{
+                        opacity: 1
+                    }}
+                    transition={{
+                        type: 'timing',
+                        duration: 2000
+                    }}
+                >
+
+
+                    <SignInContainer>
+                        <Inputs.TextInput placeholder="usuário ou email" />
+                        <Inputs.Password placeholder="senha" />
+                        <Buttons.SimpleButton label="ENTRAR" />
+                        <ForgotPasswordButton>
+                            <ForgotPasswordText>Esqueceu sua senha?</ForgotPasswordText>
+                        </ForgotPasswordButton>
+                    </SignInContainer>
+
+                </MotiView>
                 <FooterContainer>
                     <Buttons.WithLabelAndIcon />
                 </FooterContainer>
