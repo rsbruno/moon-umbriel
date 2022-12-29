@@ -1,18 +1,17 @@
 import React, { useState } from "react";
 import { TextInputProps } from "react-native";
-import { ButtonHidePassword } from "./PasswordStyles";
 import { Ionicons } from '@expo/vector-icons';
-import { themes } from "@themes/index";
+
 import BaseWrapperComponent from "../Base/BaseWrapperComponent/BaseWrapperComponent";
 import BaseInputComponent from "../Base/BaseInputComponent/BaseInputComponent";
-import { Control } from 'react-hook-form'
 
-interface IPasswordComponentsProps extends TextInputProps {
-    control: Control<any, any>;
-    name: string
-}
+import { themes } from "@themes/index";
 
-export default function PasswordComponents({ control, name, ...props }: IPasswordComponentsProps) {
+import { ButtonHidePassword } from "./PasswordStyles";
+
+interface IPasswordComponentsProps extends TextInputAdditionalProps, TextInputProps { }
+
+export default function PasswordComponents({ control, name, errors, ...props }: IPasswordComponentsProps) {
     const [nameIcon, setNameIcon] = useState<any>("ios-eye-outline");
     const [isFocus, setIsFocus] = useState<boolean>(false);
 
@@ -21,7 +20,7 @@ export default function PasswordComponents({ control, name, ...props }: IPasswor
     }
 
     return <>
-        <BaseWrapperComponent focus={isFocus} customLabel={props.placeholder}>
+        <BaseWrapperComponent focus={isFocus} errors={errors} name={name} customLabel={props.placeholder}>
             <BaseInputComponent
                 {...props}
                 name={name}

@@ -1,18 +1,15 @@
 import React, { useState } from "react";
 import { TextInputProps } from "react-native";
-import BaseInputComponent from "../Base/BaseInputComponent/BaseInputComponent";
+
 import BaseWrapperComponent from "../Base/BaseWrapperComponent/BaseWrapperComponent";
-import { Control } from 'react-hook-form'
+import BaseInputComponent from "../Base/BaseInputComponent/BaseInputComponent";
 
-interface ITextInputComponentsProps extends TextInputProps {
-    control: Control<any, any>;
-    name: string;
-}
+interface ITextInputComponentProps extends TextInputAdditionalProps, TextInputProps { }
 
-export default function TextInputComponents({ control, name, ...props }: ITextInputComponentsProps) {
+export default function TextInputComponent({ control, name, errors, ...props }: ITextInputComponentProps) {
     const [isFocus, setIsFocus] = useState<boolean>(false);
     return <>
-        <BaseWrapperComponent focus={isFocus} customLabel={props.placeholder}>
+        <BaseWrapperComponent errors={errors} name={name} focus={isFocus} customLabel={props.placeholder}>
             <BaseInputComponent {...props} name={name} control={control} onStateFocus={focus => setIsFocus(focus)} />
         </BaseWrapperComponent>
     </>

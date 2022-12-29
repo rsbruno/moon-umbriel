@@ -6,8 +6,9 @@ const colors = {
 
     LIGHT_500: "#FFFFFF",
 
+    BACKGROUND_900: "#FFFFFF",
 
-    BACKGROUND_900: "#FFFFFF"
+    ERROR_500: '#ff0000',
 }
 
 const font = {
@@ -17,6 +18,7 @@ const font = {
         TITLE_NORMAL: 'RedHatText_400Regular'
     },
     size: {
+        SM: 12,
         NORMAL: 14
     }
 }

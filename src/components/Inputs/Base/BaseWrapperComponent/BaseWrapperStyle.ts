@@ -27,3 +27,12 @@ export const ContainerText = styled.Text`
     font-family: ${themes.font.family.TITLE_NORMAL};
     text-transform: capitalize;
 `
+
+export const ErrorView = styled.View`
+    padding-bottom: 4px;
+`
+export const ErrorText = styled.Text`
+    color: ${themes.colors.ERROR_500};
+    font-family: ${themes.font.family.TITLE_NORMAL};
+    font-size: ${themes.font.size.SM}px;
+`
