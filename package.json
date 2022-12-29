@@ -5,8 +5,8 @@
   "scripts": {
     "expo": "expo start",
     "expo:android": "expo run:android",
-    "start": "react native start",
-    "android": "react native run-android",
+    "start": "react-native start",
+    "android": "react-native run-android",
     "apk:debug": "eas build -p android"
   },
   "dependencies": {

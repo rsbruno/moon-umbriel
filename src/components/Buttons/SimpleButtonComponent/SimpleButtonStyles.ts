@@ -1,7 +1,9 @@
 import { themes } from '@themes/index'
-import styled from 'styled-components'
+import styled from 'styled-components/native'
 
-export const FullButton = styled.TouchableOpacity`
+export const FullButton = styled.TouchableOpacity.attrs(({ type }) => ({
+  activeOpacity: .8
+}))`
     width: 100%;
     height: 60px;
     border-radius: 30px;

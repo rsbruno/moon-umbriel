@@ -1,22 +1,23 @@
 import { themes } from '@themes/index'
 import styled from 'styled-components'
 
-export const Container = styled.View`
+export const TouchableContainer = styled.TouchableWithoutFeedback``
+
+export const Content = styled.View`
     flex: 1;
     background: ${themes.colors.BACKGROUND_900};
 `
 
-export const Content = styled.View`
-    flex: 1;
+export const FormContainer = styled.View`
     padding: 0 25px;
 `
 
 export const LogoContainer = styled.View`
-    height: 30%;
+    height: 20%;
 `
 
-export const SignInContainer = styled.View`
-    height: 50%;
+export const FieldsContainer = styled.View`
+    height: 300px;
     padding: 25px 0;
     align-items: flex-end;
 `
@@ -24,7 +25,7 @@ export const SignInContainer = styled.View`
 export const FooterContainer = styled.View`
     height: 20%;
     justify-content: flex-end;
-    padding-bottom: 5%;
+    align-items: center;
 `
 
 export const ForgotPasswordButton = styled.TouchableOpacity`
