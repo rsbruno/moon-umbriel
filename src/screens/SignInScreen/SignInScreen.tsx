@@ -7,6 +7,8 @@ import { Buttons } from "@components/Buttons";
 import { Inputs } from "@components/Inputs";
 import { themes } from "@themes/index";
 
+import { useForm } from 'react-hook-form'
+
 import {
     TouchableContainer, Content, FooterContainer, ForgotPasswordButton, ForgotPasswordText, FormContainer,
     LogoContainer, FieldsContainer
@@ -14,6 +16,15 @@ import {
 
 export function SignInScreen() {
     const onBlurAll = () => Keyboard.dismiss()
+
+    const { control, handleSubmit, formState: { errors } } = useForm({
+        defaultValues: {
+            user: '',
+            password: ''
+        }
+    });
+
+    const onSubmit = data => console.log(data);
 
     return <>
         <StatusBar
@@ -28,12 +39,14 @@ export function SignInScreen() {
                         <LogoContainer></LogoContainer>
                         <FieldsContainer>
                             <Inputs.TextInput
+                                control={control}
+                                name="user"
                                 placeholder='usuário ou email'
                                 keyboardType='email-address'
                                 autoCapitalize='none'
                             />
-                            <Inputs.Password placeholder='senha' />
-                            <Buttons.SimpleButton label='ENTRAR' />
+                            <Inputs.Password control={control} name="password" placeholder='senha' />
+                            <Buttons.SimpleButton label='ENTRAR' onPress={handleSubmit(onSubmit)} />
                             <ForgotPasswordButton>
                                 <ForgotPasswordText>Esqueceu sua senha?</ForgotPasswordText>
                             </ForgotPasswordButton>

@@ -5,10 +5,14 @@ import { Ionicons } from '@expo/vector-icons';
 import { themes } from "@themes/index";
 import BaseWrapperComponent from "../Base/BaseWrapperComponent/BaseWrapperComponent";
 import BaseInputComponent from "../Base/BaseInputComponent/BaseInputComponent";
+import { Control } from 'react-hook-form'
 
-interface IPasswordComponentsProps extends TextInputProps { }
+interface IPasswordComponentsProps extends TextInputProps {
+    control: Control<any, any>;
+    name: string
+}
 
-export default function PasswordComponents({ ...props }: IPasswordComponentsProps) {
+export default function PasswordComponents({ control, name, ...props }: IPasswordComponentsProps) {
     const [nameIcon, setNameIcon] = useState<any>("ios-eye-outline");
     const [isFocus, setIsFocus] = useState<boolean>(false);
 
@@ -20,6 +24,8 @@ export default function PasswordComponents({ ...props }: IPasswordComponentsProp
         <BaseWrapperComponent focus={isFocus} customLabel={props.placeholder}>
             <BaseInputComponent
                 {...props}
+                name={name}
+                control={control}
                 secureTextEntry={nameIcon !== "ios-eye-sharp"}
                 onStateFocus={focus => setIsFocus(focus)}
             />
