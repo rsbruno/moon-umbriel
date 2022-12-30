@@ -3,7 +3,6 @@ module.exports = function (api) {
   return {
     presets: ["babel-preset-expo"],
     plugins: [
-  
       [
         "module-resolver",
         {
@@ -14,11 +13,13 @@ module.exports = function (api) {
             "@themes": "./src/themes",
             "@components": "./src/components",
             "@hooks": "./src/hooks",
+            "@contexts": "./src/contexts",
+            "@services": "./src/services",
           },
         },
       ],
 
-      'react-native-reanimated/plugin',
+      "react-native-reanimated/plugin",
     ],
   };
 };

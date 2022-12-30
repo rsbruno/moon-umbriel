@@ -15,6 +15,8 @@ import {
     TouchableContainer, Content, FooterContainer, ForgotPasswordButton, ForgotPasswordText, FormContainer,
     LogoContainer, FieldsContainer
 } from "./SignInStyles";
+import { useAuth } from "@contexts/authContext";
+import { Modal } from "@components/Modal";
 
 interface FormSignInData {
     user: string;
@@ -32,20 +34,27 @@ const schema = yup.object({
 }).required();
 
 export function SignInScreen() {
+
+    const { signIn } = useAuth()
+
     const onBlurAll = () => Keyboard.dismiss()
 
     const [userIsEmail, setUserIsEmail] = useState<boolean>(true);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const { control, handleSubmit, watch, formState: { errors } } = useForm<FormSignInData>({
         defaultValues: {
-            user: '',
-            password: '',
+            user: 'rsbruno',
+            password: '123456',
         },
         resolver: yupResolver(schema),
         context: { userIsEmail }
     });
 
-    const onSubmit = data => console.log(data);
+    const onSubmit = data => {
+        setIsLoading(true)
+        signIn(data).finally(() => setIsLoading(false))
+    };
 
     const userValue = watch('user')
 
@@ -55,9 +64,19 @@ export function SignInScreen() {
         <StatusBar
             backgroundColor={themes.colors.BACKGROUND_900}
             barStyle='dark-content'
+            hidden
         />
+
+
+
         <TouchableContainer onPress={onBlurAll}>
             <Content>
+                <Modal.Loading visible={isLoading}
+                    animationType='fade'
+
+
+                />
+
                 <HeaderComponent headerTitle='Entrar' hideLeftContent />
                 <KeyBoardWrapperFormsComponent>
                     <FormContainer>
