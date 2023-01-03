@@ -5,7 +5,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form'
 import * as yup from "yup";
 
-import { KeyBoardWrapperFormsComponent } from "@components/KeyBoardWrapperFormsComponent/KeyBoardWrapperFormsComponent";
 import { HeaderComponent } from "@components/HeaderComponent/HeaderComponent";
 import { Buttons } from "@components/Buttons";
 import { Inputs } from "@components/Inputs";
@@ -17,6 +16,7 @@ import {
 } from "./SignInStyles";
 import { useAuth } from "@contexts/authContext";
 import { Modal } from "@components/Modal";
+import { KeyBoardSafeAreaComponent } from "@components/KeyBoardSafeAreaComponent/KeyBoardSafeAreaComponent";
 
 interface FormSignInData {
     user: string;
@@ -67,18 +67,14 @@ export function SignInScreen() {
             hidden
         />
 
-
-
         <TouchableContainer onPress={onBlurAll}>
             <Content>
                 <Modal.Loading visible={isLoading}
                     animationType='fade'
-
-
                 />
 
                 <HeaderComponent headerTitle='Entrar' hideLeftContent />
-                <KeyBoardWrapperFormsComponent>
+                <KeyBoardSafeAreaComponent>
                     <FormContainer>
                         <LogoContainer></LogoContainer>
                         <FieldsContainer>
@@ -96,11 +92,11 @@ export function SignInScreen() {
                                 <ForgotPasswordText>Esqueceu sua senha?</ForgotPasswordText>
                             </ForgotPasswordButton>
                         </FieldsContainer>
-                        <FooterContainer>
+                        {/* <FooterContainer>
                             <Buttons.WithLabelAndIcon />
-                        </FooterContainer>
+                        </FooterContainer> */}
                     </FormContainer>
-                </KeyBoardWrapperFormsComponent>
+                </KeyBoardSafeAreaComponent>
             </Content>
         </TouchableContainer>
     </>

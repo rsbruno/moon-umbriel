@@ -1,7 +1,7 @@
 import SimpleButton from './SimpleButtonComponent/SimpleButtonComponent'
-import WithLabelAndIcon from './WithLabelAndIconComponent/WithLabelAndIconComponent'
+import WithCustomIcon from './WithCutomIconComponent/WithCutomIconComponent'
 
 export const Buttons = {
     SimpleButton,
-    WithLabelAndIcon
+    WithCustomIcon
 }

@@ -11,12 +11,17 @@ interface ITextInputComponentsProps extends TextInputProps {
 
 export default function BaseInputComponent({ onStateFocus, control, name, ...props }: ITextInputComponentsProps) {
     const [inputValue, setInputValue] = useState<string>('');
+    const [placeHolder, setPlaceHolder] = useState<string>(props.placeholder);
 
-    const onFocusEvent = () => onStateFocus && onStateFocus(true)
+    const onFocusEvent = () => {
+        onStateFocus && onStateFocus(true)
+        setPlaceHolder('')
+    }
 
     const onBlurEvent = (onBlur: any) => {
         onBlur();
         onStateFocus && onStateFocus(inputValue.length > 0);
+        setPlaceHolder(props.placeholder)
     }
 
     const onChangeTextEvent = (value: string, callBack: (...event: any[]) => void) => {
@@ -34,6 +39,7 @@ export default function BaseInputComponent({ onStateFocus, control, name, ...pro
                     onBlur={() => onBlurEvent(onBlur)}
                     onChangeText={event => onChangeTextEvent(event, onChange)}
                     value={value}
+                    placeholder={placeHolder}
                 />
             )}
             name={name}

@@ -2,6 +2,7 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { SignInScreen } from '@screens/SignInScreen/SignInScreen';
 import { routes } from './routes';
+import { FirstSignupScreen } from '@screens/SignupScreens/FirstSignupScreen/FirstSignupScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -11,8 +12,10 @@ export function OnboardingRoutes() {
             screenOptions={{
                 header: () => <></>
             }}
+            initialRouteName={routes.onBoarding.FIRST_SIGN_UP_SCREEN}
         >
             <Stack.Screen name={routes.onBoarding.SIGN_IN_SCREEN} component={SignInScreen} />
+            <Stack.Screen name={routes.onBoarding.FIRST_SIGN_UP_SCREEN} component={FirstSignupScreen} />
         </Stack.Navigator>
     );
 }

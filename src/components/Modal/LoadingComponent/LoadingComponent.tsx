@@ -32,9 +32,12 @@ export default function LoadingComponent(props: ILoadingComponentProps) {
     return <>
         <ModalContainer state={animation} transition={{
             type: 'timing',
-        }}>
+
+        }}
+
+        >
             <ContentLoading>
-                <ActivityIndicator size={50}  color='#000' />
+                <ActivityIndicator size={50} color='#000' />
                 <ContentLoadingText>Só um momento...</ContentLoadingText>
             </ContentLoading>
         </ModalContainer>

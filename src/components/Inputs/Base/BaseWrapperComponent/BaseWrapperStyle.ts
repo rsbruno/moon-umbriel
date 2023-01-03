@@ -1,15 +1,29 @@
 import { themes } from '@themes/index'
 import { MotiView } from 'moti'
 import styled from 'styled-components/native'
+import themez from 'styled-theming';
+
+const InputNormalStyle = {
+    border: `solid 1px ${themes.colors.DARK_200}`
+};
+
+const InputErrorStyle = {
+    border: `solid 1px ${themes.colors.ERROR_500}`
+};
+
+const InputStatusStyle = themez('mode', {
+    normal: InputNormalStyle,
+    error: InputErrorStyle
+});
 
 export const BaseContainer = styled.View`
+    ${InputStatusStyle}
     position: relative;
-    width: 100%;
-    height: 60px;
+    width: ${props => props.size ? `${props.size}%` : '100%'};
+    height: 50px;
     border-radius: 30px;
-    border: ${() => `solid 1px ${themes.colors.DARK_200}`};
     padding: 0 25px;
-    margin: 8px 0;
+    margin-top: ${props => props.removeMargin ? 0 : '13px'};
 `
 
 export const ContainerLabel = styled(MotiView)`
@@ -22,15 +36,31 @@ export const ContainerLabel = styled(MotiView)`
     padding: 0 8px;
 `
 
+const LabelNormalStyle = {
+    color: themes.colors.DARK_200
+};
+
+const LabelErrorStyle = {
+    color: themes.colors.ERROR_500
+};
+
+const LabelStatusStyle = themez('mode', {
+    normal: LabelNormalStyle,
+    error: LabelErrorStyle
+});
+
 export const ContainerText = styled.Text`
-    color: ${themes.colors.DARK_200};
+    ${LabelStatusStyle}
     font-family: ${themes.font.family.TITLE_NORMAL};
     text-transform: capitalize;
 `
 
 export const ErrorView = styled.View`
-    padding-bottom: 4px;
+    position: absolute;
+    bottom: 0;
+    left: 25px;
 `
+
 export const ErrorText = styled.Text`
     color: ${themes.colors.ERROR_500};
     font-family: ${themes.font.family.TITLE_NORMAL};

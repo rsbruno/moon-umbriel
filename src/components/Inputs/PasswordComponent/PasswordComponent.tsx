@@ -20,7 +20,7 @@ export default function PasswordComponents({ control, name, errors, ...props }: 
     }
 
     return <>
-        <BaseWrapperComponent focus={isFocus} errors={errors} name={name} customLabel={props.placeholder}>
+        <BaseWrapperComponent focus={isFocus} errors={errors} name={name} customLabel={props.placeholder} {...props}>
             <BaseInputComponent
                 {...props}
                 name={name}

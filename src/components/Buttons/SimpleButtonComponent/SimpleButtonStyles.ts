@@ -5,11 +5,10 @@ export const FullButton = styled.TouchableOpacity.attrs(({ type }) => ({
   activeOpacity: .8
 }))`
     width: 100%;
-    height: 60px;
+    height: 50px;
     border-radius: 30px;
     overflow: hidden;
     padding: 0 25px;
-    margin: 8px 0;
     background: ${themes.colors.DARK_500};
     align-items: center;
     justify-content: center;

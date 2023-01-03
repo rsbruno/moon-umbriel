@@ -9,7 +9,7 @@ interface ITextInputComponentProps extends TextInputAdditionalProps, TextInputPr
 export default function TextInputComponent({ control, name, errors, ...props }: ITextInputComponentProps) {
     const [isFocus, setIsFocus] = useState<boolean>(false);
     return <>
-        <BaseWrapperComponent errors={errors} name={name} focus={isFocus} customLabel={props.placeholder}>
+        <BaseWrapperComponent errors={errors} name={name} focus={isFocus} customLabel={props.placeholder} {...props}>
             <BaseInputComponent {...props} name={name} control={control} onStateFocus={focus => setIsFocus(focus)} />
         </BaseWrapperComponent>
     </>

@@ -3,6 +3,7 @@ const colors = {
 
     DARK_500: "#252525",
     DARK_200: "#aeaeae",
+    DARK_100: "#dddddd",
 
     LIGHT_500: "#FFFFFF",
 
