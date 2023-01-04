@@ -1,28 +1,15 @@
 import { themes } from '@themes/index'
+import { ButtonComponentStyles } from '@themes/theming/ButtonComponentStyles';
+import { ButtonTextStyles } from '@themes/theming/ButtonTextsStyles';
 import { TouchableOpacity } from 'react-native'
 import styled from 'styled-components/native'
 import themez from 'styled-theming'
 
-const ButtonDark = {
-    border: `solid 1px ${themes.colors.DARK_500}`,
-    background: themes.colors.DARK_500
-};
-
-const ButtonDisabled = {
-    border: `solid 1px ${themes.colors.DARK_200}`,
-    background: themes.colors.DARK_200
-};
-
-const ButtonModeStyle = themez('mode', {
-    dark: ButtonDark,
-    disabled: ButtonDisabled
-});
-
 export const ContainerButton = styled(TouchableOpacity).attrs({
     activeOpacity: .8,
 })`
-    ${ButtonModeStyle}
-    width: 100%;
+    ${ButtonComponentStyles}
+    width: ${props => props.size ? `${props.size}%` : '100%'};
     height: 50px;
     border-radius: 30px;
     overflow: hidden;
@@ -33,21 +20,8 @@ export const ContainerButton = styled(TouchableOpacity).attrs({
     position: relative;
 `
 
-const LabelDark = {
-    color: themes.colors.LIGHT_500
-};
-
-const LabelDisabled = {
-    color: themes.colors.DARK_500
-};
-
-const LabelModeStyle = themez('mode', {
-    dark: LabelDark,
-    disabled: LabelDisabled
-});
-
 export const LabelButton = styled.Text`
-    ${LabelModeStyle}
+    ${ButtonTextStyles}
     font-family: ${themes.font.family.TITLE_MEDIUM};
     font-size: ${themes.font.size.NORMAL}px;
 `
@@ -66,13 +40,11 @@ const IconNormal = {
     position: 'relative',
 };
 
-
 const IconModeStyle = themez('iconPosition', {
     left: IconInLeft,
     right: IconInRight,
     normal: IconNormal
 });
-
 
 export const IconContainer = styled.View`
     ${IconModeStyle}

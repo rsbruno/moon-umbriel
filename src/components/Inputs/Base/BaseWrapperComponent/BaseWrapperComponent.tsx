@@ -1,6 +1,5 @@
 import { useAnimationState } from "moti";
 import React, { ReactNode, useEffect, useState } from "react";
-import { boolean } from "yup";
 
 import { BaseContainer, ContainerLabel, ContainerText, ErrorText, ErrorView } from "./BaseWrapperStyle";
 

@@ -9,7 +9,6 @@ export const SignUpContainer = styled.View`
     background-color: ${themes.colors.BACKGROUND_900};
 `
 
-/* Form Inicio */
 export const ContainerAvatarAndNickName = styled.View`
     width: 100%;
     flex-direction: row;
@@ -37,16 +36,12 @@ export const ContainerInputsName = styled.View`
     flex-direction: row;
     justify-content: space-between;
 `
-/* Form Fim */
-
-export const FormContainer = styled(ScrollView)`
-    flex: 1;
-    padding: 0 25px;
-`
 
 export const FooterContainer = styled.View`
     width: 100%;
     padding: 10px 25px;
+    flex-direction: row;
+    justify-content: space-between;
 `
 
 export const HeaderStepsScreen = styled.View`

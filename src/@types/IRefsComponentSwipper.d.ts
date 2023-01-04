@@ -1,4 +1,4 @@
-declare type SwiperComponentRefs = {
+declare type IRefsComponentSwipper = {
     toNextSwiper: () => void;
     toPrevSwiper: () => void;
 }

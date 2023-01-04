@@ -10,7 +10,7 @@ interface IHeaderComponentProps {
     hideRightContent?: boolean,
 }
 
-export function HeaderComponent({ headerTitle, hideLeftContent, hideRightContent }: IHeaderComponentProps) {
+export function ComponentHeader({ headerTitle, hideLeftContent, hideRightContent }: IHeaderComponentProps) {
     return <>
         <Container>
             <LeftContent>

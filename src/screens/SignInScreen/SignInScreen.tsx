@@ -5,7 +5,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form'
 import * as yup from "yup";
 
-import { HeaderComponent } from "@components/HeaderComponent/HeaderComponent";
 import { Buttons } from "@components/Buttons";
 import { Inputs } from "@components/Inputs";
 import { themes } from "@themes/index";
@@ -16,7 +15,8 @@ import {
 } from "./SignInStyles";
 import { useAuth } from "@contexts/authContext";
 import { Modal } from "@components/Modal";
-import { KeyBoardSafeAreaComponent } from "@components/KeyBoardSafeAreaComponent/KeyBoardSafeAreaComponent";
+import { ComponentHeader } from "@components/ComponentHeader/ComponentHeader";
+import { ComponentSafeKeyBoard } from "@components/ComponentSafeKeyBoard/ComponentSafeKeyBoard";
 
 interface FormSignInData {
     user: string;
@@ -73,8 +73,8 @@ export function SignInScreen() {
                     animationType='fade'
                 />
 
-                <HeaderComponent headerTitle='Entrar' hideLeftContent />
-                <KeyBoardSafeAreaComponent>
+                <ComponentHeader headerTitle='Entrar' hideLeftContent />
+                <ComponentSafeKeyBoard>
                     <FormContainer>
                         <LogoContainer></LogoContainer>
                         <FieldsContainer>
@@ -87,7 +87,7 @@ export function SignInScreen() {
                                 errors={errors}
                             />
                             <Inputs.Password control={control} errors={errors} name="password" placeholder='senha' />
-                            <Buttons.SimpleButton label='ENTRAR' onPress={handleSubmit(onSubmit)} />
+                            <Buttons.SimpleButton theme='dark' label='ENTRAR' onPress={handleSubmit(onSubmit)} />
                             <ForgotPasswordButton>
                                 <ForgotPasswordText>Esqueceu sua senha?</ForgotPasswordText>
                             </ForgotPasswordButton>
@@ -96,7 +96,7 @@ export function SignInScreen() {
                             <Buttons.WithLabelAndIcon />
                         </FooterContainer> */}
                     </FormContainer>
-                </KeyBoardSafeAreaComponent>
+                </ComponentSafeKeyBoard>
             </Content>
         </TouchableContainer>
     </>

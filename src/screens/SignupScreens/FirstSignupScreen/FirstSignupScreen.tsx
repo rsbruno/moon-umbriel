@@ -1,23 +1,22 @@
-import { Buttons } from "@components/Buttons";
-import { HeaderComponent } from "@components/HeaderComponent/HeaderComponent";
-import { themes } from "@themes/index";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
+import { Keyboard, StatusBar, TouchableOpacityProps } from "react-native";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Feather } from '@expo/vector-icons';
 import { useForm } from "react-hook-form";
-import { Dimensions, Keyboard, StatusBar, TouchableOpacityProps } from "react-native";
-import {
-    FormContainer, SignUpContainer,
-    FooterContainer, HeaderStepsScreen, StepContainer, StepName, StepIndicator, ContainerAvatarAndNickName, ContainerAvatar, ContainerUserNameInput, ContainerInputsName
-} from "./FirstSignupStyles";
-
 import * as yup from "yup";
 
-import { Feather } from '@expo/vector-icons';
-import { yupResolver } from "@hookform/resolvers/yup";
-import { KeyBoardSafeAreaComponent } from "@components/KeyBoardSafeAreaComponent/KeyBoardSafeAreaComponent";
-import { useAnimationState, View } from "moti";
+import {
+    SignUpContainer, FooterContainer, HeaderStepsScreen, StepContainer, StepName, StepIndicator,
+    ContainerAvatarAndNickName, ContainerAvatar, ContainerUserNameInput, ContainerInputsName
+} from "./FirstSignupStyles";
+
+import { ComponentSafeKeyBoard } from "@components/ComponentSafeKeyBoard/ComponentSafeKeyBoard";
+import { ComponentHeader } from "@components/ComponentHeader/ComponentHeader";
 import { TermsComponent } from "./TermsComponent/TermsComponent";
+import { Buttons } from "@components/Buttons";
 import { Inputs } from "@components/Inputs";
 import { Swiper } from "@components/Swiper";
+import { themes } from "@themes/index";
 
 interface FormSignUpData {
     username: string;
@@ -26,7 +25,6 @@ interface FormSignUpData {
     email: string;
     password: string;
     passwordconfirm: string;
-    acceptterms: string;
 }
 
 interface ScreenStepContainerProps extends TouchableOpacityProps {
@@ -51,36 +49,27 @@ const schema = yup.object({
     password: yup.string().required("Campo obrigatório!"),
     passwordconfirm: yup.string().required("Campo obrigatório!")
         .oneOf([yup.ref('password'), null], 'As senhas não conferem'),
-    acceptterms: yup.string().when('$stepNumber', (stepNumber: number, schema: any) =>
-        stepNumber === 1 ? schema.test(
-            'is-checked',
-            'Os termos de uso não foram aceitos',
-            (value: string) => value === 'checked',
-        ).required('Você precisa revisar os termos') : schema
-    ),
 }).required();
+
+enum STEPS {
+    FORM_STEP = 0,
+    TERM_STEP = 1
+}
 
 export function FirstSignupScreen() {
     const [stepNumber, setStepNumber] = useState<number>(0);
+    
+    const [termsConfirmed, setTermsConfirmed] = useState<"checked" | "unchecked">("unchecked");
 
-    const swiperRef = useRef<SwiperComponentRefs>(null)
+    const swiperRef = useRef<IRefsComponentSwipper>(null)
 
-    const { control, handleSubmit, formState: { errors, isValid } } = useForm<FormSignUpData>({
-        defaultValues: { "acceptterms": "unchecked", "email": "rsbruno.cdc@gmail.com", "firstname": "Bruno", "password": "123456", "passwordconfirm": "123456", "surname": "Santos", "username": "rsbruno" },
+    const { control, handleSubmit, formState: { errors, isValid }, getValues } = useForm<FormSignUpData>({
         resolver: yupResolver(schema),
         context: { stepNumber }
     });
 
-    const onSubmit = (data: any) => {
-        Keyboard.dismiss()
-        if (isValid) swiperRef.current.toNextSwiper()
-        // console.log(data)
-    }
-
     const onFirstSteps = () => {
-        handleSubmit(() => { })().then(() => {
-            if (isValid) swiperRef.current.toPrevSwiper()
-        })
+        swiperRef.current.toPrevSwiper()
     }
 
     const onTermsSteps = () => {
@@ -89,21 +78,43 @@ export function FirstSignupScreen() {
         })
     }
 
-    useEffect(() => {
-        console.log(errors)
-    }, [errors]);
+    const handleThemeButtonSubmit = () => {
+        switch (stepNumber) {
+            case 0:
+                return isValid ? 'dark' : 'disabled'
+            default:
+                return 'simple'
+        }
+    }
+
+    const isFormStep = (positive: any, negative: any) => stepNumber === STEPS.FORM_STEP ? positive : negative
+
+    const onPressButtonWithIcon = () => {
+        Keyboard.dismiss()
+        handleSubmit(() => { })().then((props) => {
+            if (stepNumber === STEPS.FORM_STEP && isValid) swiperRef.current.toNextSwiper()
+            else swiperRef.current.toPrevSwiper()
+        })
+    }
+
+    const onpressStoreNewUser = () => {
+        Keyboard.dismiss()
+        if (isValid && termsConfirmed === 'checked') {
+            console.log('salvar', getValues())
+        }
+    }
 
     return <>
         <StatusBar
             backgroundColor={themes.colors.BACKGROUND_900}
             barStyle='dark-content'
         />
-        <KeyBoardSafeAreaComponent>
+        <ComponentSafeKeyBoard>
             <SignUpContainer>
-                <HeaderComponent headerTitle='CADASTRO' />
+                <ComponentHeader headerTitle='CADASTRO' />
                 <HeaderStepsScreen>
-                    <ScreenStepContainer label="Primeiros Passos" theme={stepNumber === 0 ? 'focus' : 'unfocus'} onPress={onFirstSteps} />
-                    <ScreenStepContainer label="Termos e Condições" theme={stepNumber === 1 ? 'focus' : 'unfocus'} onPress={onTermsSteps} />
+                    <ScreenStepContainer label="Primeiros Passos" theme={stepNumber === STEPS.FORM_STEP ? 'focus' : 'unfocus'} onPress={onFirstSteps} />
+                    <ScreenStepContainer label="Termos e Condições" theme={stepNumber === STEPS.TERM_STEP ? 'focus' : 'unfocus'} onPress={onTermsSteps} />
                 </HeaderStepsScreen>
                 <Swiper.Container ref={swiperRef} onCurrentSwiper={current => setStepNumber(current)}>
                     <Swiper.Step>
@@ -125,24 +136,30 @@ export function FirstSignupScreen() {
                     </Swiper.Step>
                     <Swiper.Step>
                         <TermsComponent />
-                        <Inputs.CheckBox control={control} name='acceptterms' />
+                        <Inputs.CheckBox onChange={status => setTermsConfirmed(status)} initialValue="unchecked" />
                     </Swiper.Step>
                 </Swiper.Container>
                 <FooterContainer>
                     <Buttons.WithCustomIcon
                         IconComponent={<Feather
-                            name="arrow-right"
+                            name={isFormStep('arrow-right', 'arrow-left')}
                             size={24}
-                            color={isValid ? themes.colors.LIGHT_500 : themes.colors.DARK_500}
                         />}
-                        theme={isValid ? 'dark' : 'disabled'}
-                        onPress={handleSubmit(onSubmit)}
-                        label={stepNumber === 0 ? 'Próximo Passo' : 'Criar Conta'}
-                        iconPosition='right'
-                    // disabled={!isValid}
+                        iconPosition={isFormStep('right', 'left')}
+                        label={isFormStep('Avançar', 'Voltar')}
+                        theme={handleThemeButtonSubmit()}
+                        onPress={onPressButtonWithIcon}
+                        size={isFormStep(100, 48.5)}
                     />
+                    {stepNumber === STEPS.TERM_STEP && <>
+                        <Buttons.SimpleButton
+                            theme={termsConfirmed === 'checked' ? 'dark' : 'disabled'}
+                            size={48.5} label="Criar Conta"
+                            onPress={onpressStoreNewUser}
+                        />
+                    </>}
                 </FooterContainer>
             </SignUpContainer>
-        </KeyBoardSafeAreaComponent>
+        </ComponentSafeKeyBoard>
     </>
 }

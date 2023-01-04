@@ -7,7 +7,7 @@ interface IKeyBoardSafeAreaComponentProps {
     children: ReactNode;
 }
 
-export function KeyBoardSafeAreaComponent(props: IKeyBoardSafeAreaComponentProps) {
+export function ComponentSafeKeyBoard(props: IKeyBoardSafeAreaComponentProps) {
     const { keyboardVerticalOffset, children } = props
     return <>
         <KeyboardAvoidingView

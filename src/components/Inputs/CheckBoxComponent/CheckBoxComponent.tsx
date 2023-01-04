@@ -1,17 +1,15 @@
 import { useAnimationState } from 'moti'
 import React, { useEffect } from 'react'
-import { Control, Controller } from 'react-hook-form'
-import { TouchableOpacity } from 'react-native';
 import { CheckBoxbackground, CheckBoxText, CheckBoxWrapper, Container } from './CheckBoxStyles'
 
+type ICheckBoxStatus = "unchecked" | "checked"
+
 interface CheckboxComponentProps {
-    control: Control<any, any>;
-    name: string;
+    onChange?: (status: ICheckBoxStatus) => void;
+    initialValue?: ICheckBoxStatus
 }
 
-export default function CheckboxComponent({ control, name }: CheckboxComponentProps) {
-
-
+export default function CheckboxComponent({ onChange, initialValue }: CheckboxComponentProps) {
     const animationState = useAnimationState({
         unchecked: {
             opacity: 0
@@ -21,40 +19,28 @@ export default function CheckboxComponent({ control, name }: CheckboxComponentPr
         },
     })
 
-    const toggleAnimation = (onChange: (...event: any[]) => void) => {
-        animationState.transitionTo(current => current == "checked" ? "unchecked" : "checked")
-        onChange(animationState.current)
+    const toggleAnimation = (status?: ICheckBoxStatus) => {
+        animationState.transitionTo(current => status || (current == "checked" ? "unchecked" : "checked"))
+        onChange && onChange(animationState.current)
     }
 
-    const handleInitialAnimation = (current: "unchecked" | "checked", onChange: (...event: any[]) => void) => {
-        if (current !== animationState.current) animationState.transitionTo(current)
-        onChange(current)
-        console.log(current)
-    }
+    useEffect(() => {
+        if (initialValue && initialValue === 'checked') toggleAnimation('checked')
+        else if (initialValue && initialValue === 'unchecked') toggleAnimation('unchecked')
+    }, [initialValue]);
 
     return <>
-        <Controller
-            control={control}
-            render={({ field: { onChange, value, } }) => {
-                return (
-                    <Container
-                        onLayout={() => handleInitialAnimation(value, onChange)}
-                        onPress={() => toggleAnimation(onChange)}
-                    >
-                        <CheckBoxWrapper>
-                            <CheckBoxbackground
-                                state={animationState}
-                                transition={{
-                                    type: 'timing',
-                                    duration: 200,
-                                }} />
-                        </CheckBoxWrapper>
-                        <CheckBoxText>Eu aceito os Termos e quero continuar</CheckBoxText>
-                    </Container>
-                )
-            }}
-            name={name}
-        />
+        <Container onPress={() => toggleAnimation()}>
+            <CheckBoxWrapper>
+                <CheckBoxbackground
+                    state={animationState}
+                    transition={{
+                        type: 'timing',
+                        duration: 200,
+                    }} />
+            </CheckBoxWrapper>
+            <CheckBoxText>Eu aceito os Termos e quero continuar</CheckBoxText>
+        </Container>
     </>
 
 
