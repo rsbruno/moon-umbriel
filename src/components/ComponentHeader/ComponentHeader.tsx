@@ -16,7 +16,7 @@ export function ComponentHeader({ headerTitle, hideLeftContent, hideRightContent
             <LeftContent>
                 {!hideLeftContent &&
                     <ButtonEvent>
-                        <AntDesign name="arrowleft" size={32} color={themes.colors.DARK_500} />
+                        <AntDesign name="arrowleft" size={26} color={themes.colors.DARK_500} />
                     </ButtonEvent>
                 }
             </LeftContent>

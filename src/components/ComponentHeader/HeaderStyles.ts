@@ -3,9 +3,10 @@ import styled from 'styled-components'
 
 export const Container = styled.View`
     width: 100%;
-    height: 50px;
     flex-direction: row;
     padding: 0 25px;
+    padding-top: 5px;
+    padding-bottom: 15px;
 `
 export const LeftContent = styled.View`
     width: 50px;

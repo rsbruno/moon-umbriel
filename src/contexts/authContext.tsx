@@ -15,11 +15,13 @@ type User = {
     firstName: string;
     lastName: string;
     token: string;
+    incompleteUser: boolean
 }
 
 type AuthContextData = {
     user: User;
-    signIn: (payload: IPayloadUserSignIn) => Promise<IApiGenericResponseLog>;
+    signIn: (payload: IPayloadUserSignIn) => Promise<IAPIResponseGeneric<IPayloadUserSignIn>>;
+    signInWithExistentingToken: (userToken: string) => Promise<boolean>
 }
 
 type AuthContextProps = {
@@ -32,15 +34,21 @@ function AuthProvider({ children }: AuthContextProps) {
 
     const [user, setUser] = useState<User>({} as User);
 
+    async function signInWithExistentingToken(userToken: string) {
+        const { firstName, id, lastName, nickName, token } = jwt_decode(userToken) as any;
+        setUser(() => ({ firstName, id, lastName, nickName, token, incompleteUser: false }))
+        return true
+    }
+
     async function signIn(payload: IPayloadUserSignIn) {
         const apiToken = await userService.userSignIn(payload)
         const { firstName, id, lastName, nickName, token } = jwt_decode(apiToken) as any;
-        setUser(() => ({ firstName, id, lastName, nickName, token }))
+        setUser(() => ({ firstName, id, lastName, nickName, token, incompleteUser: false }))
         return { status: 200, error: null }
     }
 
     return (
-        <AuthContext.Provider value={{ user, signIn }}>
+        <AuthContext.Provider value={{ user, signIn, signInWithExistentingToken }}>
             {children}
         </AuthContext.Provider>
     )

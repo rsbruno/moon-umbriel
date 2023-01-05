@@ -17,16 +17,13 @@ import { Buttons } from "@components/Buttons";
 import { Inputs } from "@components/Inputs";
 import { Swiper } from "@components/Swiper";
 import { themes } from "@themes/index";
+import { userService } from "@services/userService";
+import { STATUS_CODE } from "@services/api";
+import { useAuth } from "@contexts/authContext";
+import { useNavigation } from "@react-navigation/native";
+import { routes } from "@routes/routes";
 
-interface FormSignUpData {
-    username: string;
-    firstname: string;
-    surname: string;
-    email: string;
-    password: string;
-    passwordconfirm: string;
-}
-
+interface FormSignUpData extends IPayloadUserStore { }
 interface ScreenStepContainerProps extends TouchableOpacityProps {
     label: string;
     theme: 'focus' | 'unfocus';
@@ -57,8 +54,11 @@ enum STEPS {
 }
 
 export function FirstSignupScreen() {
+    const useAuthContext = useAuth()
+    const navigation = useNavigation()
     const [stepNumber, setStepNumber] = useState<number>(0);
-    
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+
     const [termsConfirmed, setTermsConfirmed] = useState<"checked" | "unchecked">("unchecked");
 
     const swiperRef = useRef<IRefsComponentSwipper>(null)
@@ -97,10 +97,17 @@ export function FirstSignupScreen() {
         })
     }
 
-    const onpressStoreNewUser = () => {
+    const onpressStoreNewUser = async () => {
         Keyboard.dismiss()
         if (isValid && termsConfirmed === 'checked') {
-            console.log('salvar', getValues())
+            setIsLoading(true)
+            const payload = getValues()
+            const { status, data } = await userService.storeSimpleUser(payload)
+            if (status === STATUS_CODE.OK) {
+                const userAuthenticated = useAuthContext.signInWithExistentingToken(data)
+                if (userAuthenticated) navigation.navigate(routes.onBoarding.WELCOME_SCREEN as never)
+            }
+            setIsLoading(false)
         }
     }
 
@@ -111,7 +118,7 @@ export function FirstSignupScreen() {
         />
         <ComponentSafeKeyBoard>
             <SignUpContainer>
-                <ComponentHeader headerTitle='CADASTRO' />
+                <ComponentHeader headerTitle='CADASTRO' hideLeftContent hideRightContent />
                 <HeaderStepsScreen>
                     <ScreenStepContainer label="Primeiros Passos" theme={stepNumber === STEPS.FORM_STEP ? 'focus' : 'unfocus'} onPress={onFirstSteps} />
                     <ScreenStepContainer label="Termos e Condições" theme={stepNumber === STEPS.TERM_STEP ? 'focus' : 'unfocus'} onPress={onTermsSteps} />
@@ -156,6 +163,7 @@ export function FirstSignupScreen() {
                             theme={termsConfirmed === 'checked' ? 'dark' : 'disabled'}
                             size={48.5} label="Criar Conta"
                             onPress={onpressStoreNewUser}
+                            isLoading={isLoading}
                         />
                     </>}
                 </FooterContainer>
