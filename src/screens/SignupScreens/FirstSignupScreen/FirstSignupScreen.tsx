@@ -111,6 +111,10 @@ export function FirstSignupScreen() {
         }
     }
 
+    const onPressCanGoBack = () => {
+        if (navigation.canGoBack()) navigation.goBack()
+    }
+
     return <>
         <StatusBar
             backgroundColor={themes.colors.BACKGROUND_900}
@@ -118,7 +122,7 @@ export function FirstSignupScreen() {
         />
         <ComponentSafeKeyBoard>
             <SignUpContainer>
-                <ComponentHeader headerTitle='CADASTRO' hideLeftContent hideRightContent />
+                <ComponentHeader headerTitle='CADASTRO' onPressLeftIcon={onPressCanGoBack} hideRightContent />
                 <HeaderStepsScreen>
                     <ScreenStepContainer label="Primeiros Passos" theme={stepNumber === STEPS.FORM_STEP ? 'focus' : 'unfocus'} onPress={onFirstSteps} />
                     <ScreenStepContainer label="Termos e Condições" theme={stepNumber === STEPS.TERM_STEP ? 'focus' : 'unfocus'} onPress={onTermsSteps} />

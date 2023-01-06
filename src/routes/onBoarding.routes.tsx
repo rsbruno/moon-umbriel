@@ -13,7 +13,7 @@ export function OnboardingRoutes() {
             screenOptions={{
                 header: () => <></>
             }}
-            initialRouteName={routes.onBoarding.FIRST_SIGN_UP_SCREEN}
+            initialRouteName={routes.onBoarding.SIGN_IN_SCREEN}
         >
             <Stack.Screen name={routes.onBoarding.SIGN_IN_SCREEN} component={SignInScreen} />
             <Stack.Screen name={routes.onBoarding.FIRST_SIGN_UP_SCREEN} component={FirstSignupScreen} />

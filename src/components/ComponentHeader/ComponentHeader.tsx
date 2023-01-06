@@ -8,14 +8,15 @@ interface IHeaderComponentProps {
     headerTitle?: string,
     hideLeftContent?: boolean,
     hideRightContent?: boolean,
+    onPressLeftIcon?: () => void
 }
 
-export function ComponentHeader({ headerTitle, hideLeftContent, hideRightContent }: IHeaderComponentProps) {
+export function ComponentHeader({ headerTitle, hideLeftContent, hideRightContent, onPressLeftIcon }: IHeaderComponentProps) {
     return <>
         <Container>
             <LeftContent>
                 {!hideLeftContent &&
-                    <ButtonEvent>
+                    <ButtonEvent onPress={() => onPressLeftIcon && onPressLeftIcon()}>
                         <AntDesign name="arrowleft" size={26} color={themes.colors.DARK_500} />
                     </ButtonEvent>
                 }

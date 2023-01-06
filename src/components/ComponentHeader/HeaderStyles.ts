@@ -4,7 +4,7 @@ import styled from 'styled-components'
 export const Container = styled.View`
     width: 100%;
     flex-direction: row;
-    padding: 0 25px;
+    padding: 0 15px;
     padding-top: 5px;
     padding-bottom: 15px;
 `

@@ -5,6 +5,8 @@ import React, { useCallback } from 'react';
 import { View } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
 import { useFonts, RedHatText_700Bold, RedHatText_500Medium, RedHatText_400Regular } from '@expo-google-fonts/red-hat-text';
+import { AuthProvider } from '@contexts/authContext';
+import { NavigationContainer } from '@react-navigation/native';
 
 
 SplashScreen.preventAutoHideAsync();
@@ -30,7 +32,11 @@ export default function App() {
 
   return (
     <View onLayout={onLayoutRootView} style={{ flex: 1 }}>
-      <AppRoutes />
+      <AuthProvider>
+        <NavigationContainer>
+          <AppRoutes />
+        </NavigationContainer>
+      </AuthProvider>
     </View>
   );
 }

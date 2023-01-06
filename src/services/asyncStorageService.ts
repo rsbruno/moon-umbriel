@@ -20,7 +20,8 @@ const getData = async (name: any) => {
 }
 
 const NAMES = {
-    STORAGE_USER: '@storage_user'
+    STORAGE_USER: '@storage_user',
+    STORAGE_AUTH: '@storage_auth',
 }
 
 export const asyncStorageService = {

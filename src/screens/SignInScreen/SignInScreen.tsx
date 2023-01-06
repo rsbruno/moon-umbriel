@@ -10,13 +10,15 @@ import { Inputs } from "@components/Inputs";
 import { themes } from "@themes/index";
 
 import {
-    TouchableContainer, Content, FooterContainer, ForgotPasswordButton, ForgotPasswordText, FormContainer,
-    LogoContainer, FieldsContainer
+    ContainerSignIn, FooterContainer, FormContainer
 } from "./SignInStyles";
 import { useAuth } from "@contexts/authContext";
 import { Modal } from "@components/Modal";
 import { ComponentHeader } from "@components/ComponentHeader/ComponentHeader";
 import { ComponentSafeKeyBoard } from "@components/ComponentSafeKeyBoard/ComponentSafeKeyBoard";
+import { asyncStorageService } from "@services/asyncStorageService";
+import { useNavigation } from "@react-navigation/native";
+import { routes } from "@routes/routes";
 
 interface FormSignInData {
     user: string;
@@ -37,6 +39,8 @@ export function SignInScreen() {
 
     const { signIn } = useAuth()
 
+    const navigation = useNavigation()
+
     const onBlurAll = () => Keyboard.dismiss()
 
     const [userIsEmail, setUserIsEmail] = useState<boolean>(true);
@@ -51,53 +55,47 @@ export function SignInScreen() {
         context: { userIsEmail }
     });
 
-    const onSubmit = data => {
+    const onSubmit = async (data) => {
         setIsLoading(true)
         signIn(data).finally(() => setIsLoading(false))
+
+        const data2 = await asyncStorageService.getData(asyncStorageService.NAMES.STORAGE_USER)
+        console.log(data2)
     };
 
     const userValue = watch('user')
 
     useEffect(() => setUserIsEmail(() => userValue && userValue.includes('@')), [userValue])
 
+    const signInAccount = () => navigation.navigate(routes.onBoarding.FIRST_SIGN_UP_SCREEN as never)
+
     return <>
         <StatusBar
             backgroundColor={themes.colors.BACKGROUND_900}
             barStyle='dark-content'
-            hidden
         />
-
-        <TouchableContainer onPress={onBlurAll}>
-            <Content>
-                <Modal.Loading visible={isLoading}
-                    animationType='fade'
-                />
-
-                <ComponentHeader headerTitle='Entrar' hideLeftContent />
-                <ComponentSafeKeyBoard>
-                    <FormContainer>
-                        <LogoContainer></LogoContainer>
-                        <FieldsContainer>
-                            <Inputs.TextInput
-                                control={control}
-                                name="user"
-                                placeholder='usuário ou email'
-                                keyboardType='email-address'
-                                autoCapitalize='none'
-                                errors={errors}
-                            />
-                            <Inputs.Password control={control} errors={errors} name="password" placeholder='senha' />
-                            <Buttons.SimpleButton theme='dark' label='ENTRAR' onPress={handleSubmit(onSubmit)} />
-                            <ForgotPasswordButton>
-                                <ForgotPasswordText>Esqueceu sua senha?</ForgotPasswordText>
-                            </ForgotPasswordButton>
-                        </FieldsContainer>
-                        {/* <FooterContainer>
-                            <Buttons.WithLabelAndIcon />
-                        </FooterContainer> */}
-                    </FormContainer>
-                </ComponentSafeKeyBoard>
-            </Content>
-        </TouchableContainer>
+        <ComponentSafeKeyBoard>
+            <ContainerSignIn>
+                <ComponentHeader headerTitle='Entrar' hideLeftContent hideRightContent />
+                <FormContainer>
+                    <Inputs.TextInput
+                        control={control}
+                        name="user"
+                        placeholder='usuário ou email'
+                        keyboardType='email-address'
+                        autoCapitalize='none'
+                        errors={errors}
+                    />
+                    <Inputs.Password control={control} errors={errors} name="password" placeholder='senha' />
+                    <Buttons.SimpleButton theme='dark' label='ENTRAR' onPress={handleSubmit(onSubmit)} isLoading={isLoading} />
+                    <FooterContainer>
+                        <Buttons.SimpleButton theme='simple' size={48.5} label='Google' onPress={handleSubmit(onSubmit)} />
+                        <Buttons.SimpleButton theme='dark' size={48.5} label='Criar Conta' onPress={signInAccount} />
+                    </FooterContainer>
+                </FormContainer>
+            </ContainerSignIn>
+        </ComponentSafeKeyBoard>
     </>
 }
+
+
