@@ -4,6 +4,6 @@ import styled from 'styled-components'
 
 export const SwipeContainer = styled(MotiView)`
     flex: 1;
-    width: ${props => `${(Dimensions.get('window').width) * props.childNumber}px`};
+    width: ${props => `${(Dimensions.get('screen').width) * props.childNumber}px`};
     flex-direction: row;
 `

@@ -1,5 +1,7 @@
 const colors = {
     PRIMARY_500: "#00ADB5",
+    PRIMARY_600: "#FF9500",
+    PRIMARY_700: "#FF7324",
 
     DARK_500: "#252525",
     DARK_200: "#aeaeae",
@@ -20,7 +22,8 @@ const font = {
     },
     size: {
         SM: 12,
-        NORMAL: 14
+        NORMAL: 14,
+        LG: 24
     }
 }
 

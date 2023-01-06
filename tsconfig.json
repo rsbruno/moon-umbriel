@@ -9,6 +9,7 @@
       "@hooks/*": ["src/hooks/*"],
       "@contexts/*": ["src/contexts/*"],
       "@services/*": ["src/services/*"],
+      "@assets/*": ["src/assets/*"],
     }
   },
   "extends": "expo/tsconfig.base"

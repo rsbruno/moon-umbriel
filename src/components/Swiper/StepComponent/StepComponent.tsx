@@ -3,13 +3,14 @@ import { ScrollView, ScrollViewProps } from 'react-native'
 import { SwipeStep } from './StepStyle'
 
 interface StepComponentProps extends ScrollViewProps {
-    children: ReactNode
+    children: ReactNode,
+    horizontalPadding?: number;
 }
 
-function StepComponent({ children, ...rest }: StepComponentProps) {
+function StepComponent({ children, horizontalPadding, ...rest }: StepComponentProps) {
     return <>
         <ScrollView contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false} {...rest}>
-            <SwipeStep>
+            <SwipeStep horizontalPadding={0}>
                 <>{children}</>
             </SwipeStep>
         </ScrollView>

@@ -6,7 +6,10 @@ export const ContainerButton = styled(TouchableOpacity).attrs({
     activeOpacity: .8,
 })`
     ${ButtonComponentStyles}
-    width: ${props => props.size ? `${props.size}%` : '100%'};
+    width: ${props => {
+        const unity = props.sizeUnity !== undefined ? props.sizeUnity : '%'
+        return props.size ? `${props.size}${unity}` : `100${unity}`
+    }};
     height: 50px;
     border-radius: 30px;
     overflow: hidden;
@@ -15,4 +18,5 @@ export const ContainerButton = styled(TouchableOpacity).attrs({
     justify-content: center;
     flex-direction: row;
     position: relative;
+    opacity: ${props => props.visibility == 'visible' || props.visibility === undefined ? 1 : 0};
 `

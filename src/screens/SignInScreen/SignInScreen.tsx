@@ -67,7 +67,7 @@ export function SignInScreen() {
 
     useEffect(() => setUserIsEmail(() => userValue && userValue.includes('@')), [userValue])
 
-    const signInAccount = () => navigation.navigate(routes.onBoarding.FIRST_SIGN_UP_SCREEN as never)
+    const signInAccount = () => navigation.navigate(routes.publics.FIRST_SIGN_UP_SCREEN as never)
 
     return <>
         <StatusBar
