@@ -13,8 +13,18 @@ const ButtonTextSimple = {
     color: themes.colors.DARK_500
 };
 
+const ButtonTextLight = {
+    color: themes.colors.DARK_500
+};
+
+const ButtonTextGray = {
+    color: themes.colors.DARK_500
+};
+
+
 export const ButtonTextStyles = themez('buttonsmode', {
     dark: ButtonTextDark,
     disabled: ButtonTextDisabled,
-    simple: ButtonTextSimple
+    simple: ButtonTextSimple,
+    light: ButtonTextLight
 });

@@ -11,7 +11,7 @@ export const ContainerButton = styled(TouchableOpacity).attrs({
         return props.size ? `${props.size}${unity}` : `100${unity}`
     }};
     height: 50px;
-    border-radius: 30px;
+    border-radius: ${props => props.bdRadius !== undefined ? props.bdRadius : 25}px;
     overflow: hidden;
     margin: 8px 0;
     align-items: center;

@@ -6,6 +6,7 @@ import { HeaderLayout, LayoutContent, LayoutFooter, LayoutStepIndicator, Onboard
 
 import { Feather } from '@expo/vector-icons';
 import { Swiper } from '@components/Swiper'
+import { DefineAgeScreen } from '../DefineAgeScreen/DefineAgeScreen'
 
 type IStateIndicator = 'unVisited' | 'visited' | 'finished'
 
@@ -50,7 +51,7 @@ export function OnboardingLayoutComponent() {
             <LayoutContent>
                 <Swiper.Container ref={swiperRef} onCurrentSwiper={current => updateIndicator(current)}>
                     <Swiper.Step>
-                        <Text>1</Text>
+                        <DefineAgeScreen />
                     </Swiper.Step>
                     <Swiper.Step>
                         <Text>2</Text>
@@ -66,7 +67,7 @@ export function OnboardingLayoutComponent() {
                     </Swiper.Step>
                 </Swiper.Container>
             </LayoutContent>
-            <LayoutFooter>
+            {/* <LayoutFooter>
                 <Buttons.WithCustomIcon
                     IconComponent={<Feather
                         name={'arrow-left'}
@@ -90,7 +91,7 @@ export function OnboardingLayoutComponent() {
                     theme='dark'
                     size={48.5}
                 />
-            </LayoutFooter>
+            </LayoutFooter> */}
         </OnboardingLayout>
     </>
 }

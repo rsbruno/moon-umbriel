@@ -16,8 +16,20 @@ const ButtonSimple = {
     background: 'transparent'
 };
 
+const ButtonLight = {
+    border: `solid 1px ${themes.colors.LIGHT_500}`,
+    background: themes.colors.LIGHT_500
+};
+
+const ButtonGray = {
+    border: `solid 1px ${themes.colors.DARK_100}`,
+    background: themes.colors.DARK_100
+};
+
 export const ButtonComponentStyles = themez('buttonsmode', {
     dark: ButtonDark,
     disabled: ButtonDisabled,
-    simple: ButtonSimple
+    simple: ButtonSimple,
+    light: ButtonLight,
+    gray: ButtonGray
 });
