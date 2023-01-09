@@ -29,14 +29,14 @@ const ContainerComponent = forwardRef((props: ContainerComponentProps, ref) => {
         setCurrentAnimation(prev => {
             const limitUpdate = Children.toArray(children).length - 1
             const pageStep = prev.pageStep < limitUpdate ? prev.pageStep + 1 : prev.pageStep
-            const displacement = Dimensions.get('screen').width * pageStep
-            return ({ type: "toNextSwiper", displacement, pageStep })
+            const displacement = (Dimensions.get('screen').width * pageStep)
+            return { type: "toNextSwiper", displacement, pageStep }
         })
     }
     const toPrevSwiper = () => {
         setCurrentAnimation(prev => {
             const pageStep = prev.pageStep > 0 ? prev.pageStep - 1 : prev.pageStep
-            const displacement = Dimensions.get('screen').width * pageStep
+            const displacement = Math.abs(Dimensions.get('screen').width - prev.displacement)
             return ({ type: "toPrevSwiper", displacement, pageStep })
         })
     }
@@ -49,7 +49,7 @@ const ContainerComponent = forwardRef((props: ContainerComponentProps, ref) => {
             left: (Dimensions.get('screen').width * currentAnimation.pageStep) * -1
         },
         toPrevSwiper: {
-            left: (Dimensions.get('screen').width * currentAnimation.pageStep)
+            left: (currentAnimation.displacement * -1)
         },
     })
 
@@ -61,7 +61,7 @@ const ContainerComponent = forwardRef((props: ContainerComponentProps, ref) => {
     useEffect(() => {
         onCurrentSwiper && onCurrentSwiper(currentAnimation.pageStep)
         animationState.transitionTo(currentAnimation.type)
-    }, [currentAnimation.type]);
+    }, [currentAnimation.pageStep]);
 
     return <>
         <SwipeContainer

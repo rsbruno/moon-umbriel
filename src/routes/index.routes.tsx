@@ -8,6 +8,7 @@ import { WelcomeScreen } from '@screens/Onboarding/WelcomeScreen/WelcomeScreen';
 import { SignInScreen } from '@screens/SignInScreen/SignInScreen';
 import { useAuth } from '@contexts/authContext';
 import { routes } from './routes';
+import { OnboardingLayoutComponent } from '@screens/Onboarding/Layout/OnboardingLayoutComponent';
 
 const Stack = createNativeStackNavigator();
 
@@ -17,11 +18,11 @@ export function AppRoutes() {
 
     useEffect(() => {
         if (userContext.user === null) {
-            userContext.initUserAuthAsyncStorage().then(user => {
-                if (user === null) navigation.navigate(routes.publics.SIGN_IN_SCREEN as never)
-                else if (user.incompleteUser) navigation.navigate(routes.onBoarding.WELCOME_SCREEN as never)
-                else console.log('deve ir para home do app')
-            })
+            // userContext.initUserAuthAsyncStorage().then(user => {
+            //     if (user === null) navigation.navigate(routes.publics.SIGN_IN_SCREEN as never)
+            //     else if (user.incompleteUser) navigation.navigate(routes.onBoarding.WELCOME_SCREEN as never)
+            //     else console.log('deve ir para home do app')
+            // })
         } else console.log('deve ir para home do app')
     }, []);
 
@@ -31,10 +32,11 @@ export function AppRoutes() {
                 screenOptions={{
                     header: () => <></>
                 }}
+                initialRouteName={routes.onBoarding.DEFINEAGE_SCREEN}
             >
                 <Stack.Group>
                     <Stack.Screen name={routes.onBoarding.WELCOME_SCREEN} component={WelcomeScreen} />
-                    <Stack.Screen name={routes.onBoarding.DEFINEAGE_SCREEN} component={DefineAgeScreen} />
+                    <Stack.Screen name={routes.onBoarding.DEFINEAGE_SCREEN} component={OnboardingLayoutComponent} />
                 </Stack.Group>
 
                 <Stack.Group>
