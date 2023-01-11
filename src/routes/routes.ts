@@ -1,6 +1,10 @@
 const onBoarding = {
     WELCOME_SCREEN: "WELCOME_SCREEN",
-    DEFINEAGE_SCREEN: "DEFINEAGE_SCREEN",
+}
+
+const authApp = {
+    HOME_SCREEN: "HOME_SCREEN",
+    STATISTICS_SCREEN: "STATISTICS_SCREEN",
 }
 
 const publics = {
@@ -10,5 +14,6 @@ const publics = {
 
 export const routes = {
     onBoarding,
-    publics
+    publics,
+    authApp
 }

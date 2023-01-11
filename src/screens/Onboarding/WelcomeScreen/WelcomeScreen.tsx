@@ -50,7 +50,7 @@ export function WelcomeScreen() {
             if (swiperRef.current) {
                 swiperRef.current.toNextSwiper()
             }
-        } else navigation.navigate(routes.onBoarding.DEFINEAGE_SCREEN as never)
+        } else navigation.navigate(routes.authApp.HOME_SCREEN as never)
     }
 
     const onPressBackStep = () => {
